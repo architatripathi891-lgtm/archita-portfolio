@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Archita Tripathi — ECE Portfolio"/>
+<meta property="og:description" content="Final-year ECE engineer specialising in IoT, Embedded Systems, Salesforce CRM & AI. Projects include Smart Helmet, Assistive Smart Stick, HRMS and more."/>
+<meta property="og:image" content="og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Archita Tripathi — ECE Portfolio"/>
+<meta name="twitter:description" content="IoT · Embedded Systems · Salesforce CRM · AI | B.Tech ECE 2026"/>
+<meta name="twitter:image" content="og.png"/>
+<meta name="description" content="Final-year ECE engineer specialising in IoT, Embedded Systems, Salesforce CRM and AI. Projects include Smart Helmet with GPS/GSM, Assistive Smart Stick, and Salesforce HRMS."/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Archita Tripathi | ECE Engineer · IoT · Salesforce · AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════════════════════════════ */
+:root{
+  --bg:#050810;
+  --bg2:#080d1a;
+  --surface:#0d1526;
+  --surface2:#111d35;
+  --border:#1e2f52;
+  --accent:#00d4ff;
+  --accent2:#7b5ea7;
+  --accent3:#ff6b6b;
+  --gold:#f4c542;
+  --text:#e8eaf6;
+  --muted:#6b7db3;
+  --font-display:'Syne',sans-serif;
+  --font-mono:'DM Mono',monospace;
+  --font-body:'Cabinet Grotesk',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.65;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOADING SCREEN
+═══════════════════════════════════════════════════════ */
+#loader{
+  position:fixed;inset:0;
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:9999;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#loader.hide{opacity:0;visibility:hidden}
+.loader-ring{
+  width:72px;height:72px;
+  border:2px solid var(--border);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+.loader-text{
+  margin-top:20px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════════════ */
+#cursor-dot{
+  position:fixed;
+  width:8px;height:8px;
+  background:var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:10000;
+  transform:translate(-50%,-50%);
+  transition:transform .1s ease;
+  box-shadow:0 0 12px var(--accent),0 0 24px var(--accent);
+}
+#cursor-ring{
+  position:fixed;
+  width:36px;height:36px;
+  border:1.5px solid rgba(0,212,255,.5);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:all .15s ease;
+  box-shadow:0 0 8px rgba(0,212,255,.3);
+}
+#cursor-ring.hover{
+  width:56px;height:56px;
+  border-color:var(--accent);
+  background:rgba(0,212,255,.06);
+}
+
+/* ═══════════════════════════════════════════════════════
+   PARTICLE CANVAS
+═══════════════════════════════════════════════════════ */
+#particle-canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+.wrapper{position:relative;z-index:1}
+
+/* ═══════════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;
+  background:linear-gradient(to bottom,rgba(5,8,16,.9),transparent);
+  backdrop-filter:blur(4px);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:18px;
+  letter-spacing:.05em;
+  color:var(--accent);
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--muted);
+  text-decoration:none;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent)}
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════ */
+#hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:60px;
+  padding:120px 48px 80px;
+  max-width:1200px;
+  margin:0 auto;
+}
+.hero-left{}
+.hero-tag{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid rgba(0,212,255,.3);
+  border-radius:20px;
+  padding:5px 14px;
+  margin-bottom:28px;
+  background:rgba(0,212,255,.06);
+}
+.hero-name{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(44px,7vw,84px);
+  line-height:1;
+  margin-bottom:16px;
+  background:linear-gradient(90deg,
+    #00d4ff 0%, #7b5ea7 25%,
+    #f4c542 50%, #00d4ff 75%,
+    #7b5ea7 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 6s linear infinite;
+}
+@keyframes shimmer{to{background-position:300% center}}
+
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(14px,2vw,18px);
+  color:var(--muted);
+  margin-bottom:24px;
+  font-weight:400;
+}
+.hero-desc{
+  max-width:520px;
+  color:rgba(232,234,246,.7);
+  font-size:15px;
+  margin-bottom:40px;
+  line-height:1.8;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:13px 28px;
+  border-radius:4px;
+  text-decoration:none;
+  cursor:none;
+  transition:all .25s ease;
+}
+.btn-primary{
+  background:var(--accent);
+  color:var(--bg);
+  font-weight:500;
+  box-shadow:0 0 24px rgba(0,212,255,.3);
+}
+.btn-primary:hover{box-shadow:0 0 40px rgba(0,212,255,.6);transform:translateY(-2px)}
+.btn-outline{
+  border:1px solid var(--border);
+  color:var(--text);
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* ── 3D Avatar Card (right side) ── */
+.hero-right{
+  perspective:1200px;
+  flex-shrink:0;
+}
+.avatar-card-wrap{
+  animation:cardFloat 6s ease-in-out infinite;
+}
+@keyframes cardFloat{
+  0%,100%{transform:translateY(0px) rotate3d(0,1,0,0deg)}
+  25%{transform:translateY(-14px) rotate3d(.1,1,.05,8deg)}
+  50%{transform:translateY(-8px) rotate3d(0,1,0,15deg)}
+  75%{transform:translateY(-18px) rotate3d(-.1,1,-.05,6deg)}
+}
+.avatar-card{
+  width:200px;height:240px;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border);
+  border-radius:20px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:14px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.5),
+    0 0 40px rgba(0,212,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;
+  overflow:visible;
+}
+.avatar-card::before{
+  content:'';
+  position:absolute;inset:-1px;
+  border-radius:21px;
+  background:linear-gradient(135deg,rgba(0,212,255,.3),transparent,rgba(123,94,167,.3));
+  z-index:-1;
+}
+
+/* Avatar initials with ripple */
+.avatar-initials{
+  position:relative;
+  width:80px;height:80px;
+}
+.avatar-initials .initials{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:26px;
+  color:#fff;
+  z-index:2;
+  box-shadow:0 0 24px rgba(0,212,255,.5);
+}
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  border:1.5px solid rgba(0,212,255,.6);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(1);
+  animation:rippleOut 3s ease-out infinite;
+}
+.ripple:nth-child(2){animation-delay:1s}
+.ripple:nth-child(3){animation-delay:2s}
+@keyframes rippleOut{
+  0%{width:80px;height:80px;opacity:.8}
+  100%{width:160px;height:160px;opacity:0}
+}
+.avatar-card-name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:15px;
+  color:var(--text);
+}
+.avatar-card-sub{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--accent);
+  letter-spacing:.12em;
+  text-align:center;
+  padding:0 16px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTIONS GENERAL
+═══════════════════════════════════════════════════════ */
+section{
+  max-width:1100px;
+  margin:0 auto;
+  padding:100px 48px;
+}
+.sec-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.sec-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(28px,4vw,42px);
+  margin-bottom:56px;
+  color:var(--text);
+}
+.sec-title span{color:var(--accent)}
+
+/* Reveal animations */
+.reveal{
+  opacity:0;
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.from-bottom{transform:translateY(50px)}
+.reveal.from-left{transform:translateX(-60px)}
+.reveal.from-right{transform:translateX(60px)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════════════════════ */
+.marquee-section{
+  padding:32px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+  background:var(--bg2);
+  position:relative;
+  z-index:1;
+}
+.marquee-track{
+  display:flex;
+  gap:0;
+  width:max-content;
+  animation:marquee 22s linear infinite;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  display:flex;align-items:center;gap:12px;
+  padding:0 40px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.marquee-item .dot{
+  width:5px;height:5px;
+  background:var(--accent);
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT / SUMMARY
+═══════════════════════════════════════════════════════ */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+}
+.about-text p{
+  color:rgba(232,234,246,.75);
+  margin-bottom:16px;
+  line-height:1.85;
+}
+.about-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:24px 20px;
+  text-align:center;
+  transition:border-color .3s,transform .3s;
+}
+.stat-box:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-num{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:36px;
+  color:var(--accent);
+  display:block;
+}
+.stat-lbl{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════════════════════ */
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:32px;
+}
+.skill-group{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:28px;
+  transition:border-color .3s;
+}
+.skill-group:hover{border-color:rgba(0,212,255,.3)}
+.skill-group-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.skill-group-title::before{
+  content:'';
+  width:18px;height:2px;
+  background:var(--accent);
+  display:block;
+}
+.skill-item{margin-bottom:16px}
+.skill-row{
+  display:flex;justify-content:space-between;
+  font-size:13px;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.skill-pct{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--muted);
+}
+.skill-bar-bg{
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:hidden;
+}
+.skill-bar-fill{
+  height:100%;
+  border-radius:2px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent));
+  width:0%;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 8px rgba(0,212,255,.5);
+}
+
+/* ═══════════════════════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════════════════════ */
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+}
+.project-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s, border-color .3s, box-shadow .3s;
+}
+.project-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:-100%;right:101%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);
+  transition:left .5s ease, right .5s ease;
+}
+.project-card:hover::before{left:0;right:0}
+.project-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(0,212,255,.25);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.project-num{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:.2em;
+  margin-bottom:14px;
+}
+.project-name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:18px;
+  color:var(--text);
+  margin-bottom:10px;
+  line-height:1.3;
+}
+.project-desc{
+  font-size:13.5px;
+  color:rgba(232,234,246,.65);
+  line-height:1.75;
+  margin-bottom:20px;
+}
+.project-tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.1em;
+  padding:4px 10px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  color:var(--muted);
+  background:rgba(255,255,255,.02);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════════════════════ */
+.cert-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+.cert-item{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:22px 24px;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:border-color .3s,transform .3s;
+}
+.cert-item:hover{border-color:var(--accent2);transform:translateX(4px)}
+.cert-icon{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:16px;
+}
+.cert-info{}
+.cert-name{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:13px;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.cert-org{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--accent);
+  letter-spacing:.1em;
+}
+.cert-year{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT — pulsing ripples
+═══════════════════════════════════════════════════════ */
+#contact{
+  text-align:center;
+  position:relative;
+}
+.contact-ripple-wrap{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  pointer-events:none;
+  z-index:0;
+}
+.c-ring{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(0,212,255,.15);
+  animation:cPulse 4s ease-out infinite;
+}
+.c-ring:nth-child(1){width:200px;height:200px;animation-delay:0s}
+.c-ring:nth-child(2){width:320px;height:320px;animation-delay:1s}
+.c-ring:nth-child(3){width:450px;height:450px;animation-delay:2s}
+.c-ring:nth-child(4){width:580px;height:580px;animation-delay:3s}
+@keyframes cPulse{
+  0%{opacity:.6;transform:translate(-50%,-50%) scale(.85)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.1)}
+}
+.contact-inner{position:relative;z-index:1}
+.contact-email{
+  font-family:var(--font-mono);
+  font-size:clamp(14px,2.5vw,20px);
+  color:var(--accent);
+  margin-bottom:40px;
+  word-break:break-all;
+}
+.contact-links{
+  display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+.c-link{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:10px 20px;
+  transition:all .25s;
+}
+.c-link:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.05)}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+footer{
+  text-align:center;
+  padding:32px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  #hero{
+    grid-template-columns:1fr;
+    padding:100px 20px 60px;
+    text-align:center;
+  }
+  .hero-right{display:flex;justify-content:center;order:-1}
+  .hero-btns{justify-content:center}
+  section{padding:70px 20px}
+  .about-grid{grid-template-columns:1fr}
+  .about-stats{grid-template-columns:1fr 1fr}
+  .contact-ripple-wrap{width:320px;height:320px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Initialising</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<div class="wrapper">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AT</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-tag reveal from-bottom">⚡ ECE · IoT · Embedded · AI</div>
+    <h1 class="hero-name reveal from-bottom">Archita<br>Tripathi</h1>
+    <p class="hero-title reveal from-bottom">B.Tech Electronics &amp; Communication · 2026</p>
+    <p class="hero-desc reveal from-bottom">
+      Final-year ECE engineer crafting hardware that thinks — from IoT assistive devices to 
+      Salesforce automation and ML-powered systems. Building at the intersection of silicon and intelligence.
+    </p>
+    <div class="hero-btns reveal from-bottom">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+
+  <!-- 3D FLOATING CARD + AVATAR RIPPLE -->
+  <div class="hero-right reveal from-right">
+    <div class="avatar-card-wrap">
+      <div class="avatar-card">
+        <div class="avatar-initials">
+          <div class="ripple"></div>
+          <div class="ripple"></div>
+          <div class="ripple"></div>
+          <div class="initials">AT</div>
+        </div>
+        <div class="avatar-card-name">Archita Tripathi</div>
+        <div class="avatar-card-sub">ECE · IoT · Salesforce<br>Embedded Systems</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-label reveal from-bottom">Who I Am</div>
+  <h2 class="sec-title reveal from-bottom">Building <span>intelligent</span> hardware</h2>
+  <div class="about-grid">
+    <div class="about-text reveal from-left">
+      <p>I'm a final-year ECE student at AKTU with hands-on experience across the full hardware-to-cloud stack — designing PCB circuits, programming microcontrollers, integrating IoT sensors and cloud pipelines, and automating enterprise workflows on Salesforce.</p>
+      <p>My projects span assistive technology for the visually impaired, smart safety wearables, renewable energy harvesting, and HR management systems — each one built with real components, real sensors, and real deployments.</p>
+      <p>I'm driven by the belief that great engineering should solve real human problems. Whether it's an alcohol-detecting helmet or a machine learning model, I want my work to matter.</p>
+    </div>
+    <div class="about-stats reveal from-right">
+      <div class="stat-box">
+        <span class="stat-num">5+</span>
+        <div class="stat-lbl">Hardware Projects</div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">178h</span>
+        <div class="stat-lbl">Salesforce Training</div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">6+</span>
+        <div class="stat-lbl">Certifications</div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">2026</span>
+        <div class="stat-lbl">Graduation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-label reveal from-bottom">Expertise</div>
+  <h2 class="sec-title reveal from-bottom">Technical <span>Skills</span></h2>
+  <div class="skills-grid">
+
+    <div class="skill-group reveal from-left">
+      <div class="skill-group-title">Programming</div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Python</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Java</span><span class="skill-pct">75%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="75"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>C</span><span class="skill-pct">80%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-group reveal from-bottom">
+      <div class="skill-group-title">Embedded &amp; IoT</div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Arduino IDE</span><span class="skill-pct">90%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>PCB Design</span><span class="skill-pct">80%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Sensor Integration</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>AWS IoT</span><span class="skill-pct">70%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="70"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-group reveal from-right">
+      <div class="skill-group-title">Salesforce CRM</div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Lightning App Builder</span><span class="skill-pct">88%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="88"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Flow Automation</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Reports &amp; Dashboards</span><span class="skill-pct">82%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="82"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-group reveal from-left">
+      <div class="skill-group-title">AI &amp; Data</div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Machine Learning</span><span class="skill-pct">72%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="72"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>Data Structures</span><span class="skill-pct">80%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span>MATLAB</span><span class="skill-pct">70%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="70"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-label reveal from-bottom">Work</div>
+  <h2 class="sec-title reveal from-bottom">Key <span>Projects</span></h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal from-bottom">
+      <div class="project-num">01 — Hardware</div>
+      <div class="project-name">Smart Helmet for Rider Safety</div>
+      <div class="project-desc">IoT-based safety helmet integrating GSM &amp; GPS for real-time location alerts during accident detection. MPU-6050 accelerometer detects falls and collisions; MQ-3 alcohol sensor prevents drunk riding. Emergency SMS with GPS coordinates dispatched automatically.</div>
+      <div class="project-tags">
+        <span class="tag">Arduino IDE</span><span class="tag">GSM Module</span>
+        <span class="tag">GPS Module</span><span class="tag">MPU-6050</span>
+        <span class="tag">MQ-3 Sensor</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal from-bottom">
+      <div class="project-num">02 — CRM</div>
+      <div class="project-name">Salesforce HRMS</div>
+      <div class="project-desc">Full HR Management System on Salesforce automating employee records, leave management, performance tracking, and multi-level approvals. Custom objects, Flow automation, role-based dashboards, and KPI tracking built from scratch.</div>
+      <div class="project-tags">
+        <span class="tag">Salesforce CRM</span><span class="tag">Lightning App Builder</span>
+        <span class="tag">Flow Automation</span><span class="tag">Apex</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal from-bottom">
+      <div class="project-num">03 — Assistive Tech</div>
+      <div class="project-name">Assistive Smart Stick &amp; Glass</div>
+      <div class="project-desc">IoT device aiding visually impaired navigation using ultrasonic distance sensors and PIR motion detection with real-time haptic and audio feedback. Designed for low-cost, field-deployable use.</div>
+      <div class="project-tags">
+        <span class="tag">Arduino IDE</span><span class="tag">Ultrasonic Sensor</span>
+        <span class="tag">PIR Sensor</span><span class="tag">Haptic Feedback</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal from-bottom">
+      <div class="project-num">04 — Energy</div>
+      <div class="project-name">Solar &amp; Wireless Charging Prototype</div>
+      <div class="project-desc">Solar-powered energy harvesting system with wireless power transfer via inductive coupling. Demonstrates renewable energy collection and contactless transmission for embedded device charging.</div>
+      <div class="project-tags">
+        <span class="tag">Inductive Coupling</span><span class="tag">Energy Harvesting</span>
+        <span class="tag">Solar Panel</span><span class="tag">Circuit Design</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal from-bottom">
+      <div class="project-num">05 — PCB</div>
+      <div class="project-name">5V Voltage Multiplier Circuit</div>
+      <div class="project-desc">Custom PCB design for a low-power voltage multiplier circuit. Optimised layout for minimal noise, efficient voltage conversion and compact footprint for embedded applications.</div>
+      <div class="project-tags">
+        <span class="tag">PCB Design</span><span class="tag">Low-power Electronics</span>
+        <span class="tag">Voltage Conversion</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="sec-label reveal from-bottom">Credentials</div>
+  <h2 class="sec-title reveal from-bottom">Certifications &amp; <span>Training</span></h2>
+  <div class="cert-list">
+    <div class="cert-item reveal from-left">
+      <div class="cert-icon">🤖</div>
+      <div class="cert-info">
+        <div class="cert-name">IBM AI Fundamentals</div>
+        <div class="cert-org">IBM / Coursera</div>
+        <div class="cert-year">2025</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-right">
+      <div class="cert-icon">☁️</div>
+      <div class="cert-info">
+        <div class="cert-name">Salesforce CRM Training (178 Hours)</div>
+        <div class="cert-org">Alok Halder — Global SF Instructor</div>
+        <div class="cert-year">2026</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-left">
+      <div class="cert-icon">🚂</div>
+      <div class="cert-info">
+        <div class="cert-name">Railway Signalling System</div>
+        <div class="cert-org">North Central Railway</div>
+        <div class="cert-year">2025</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-right">
+      <div class="cert-icon">🔌</div>
+      <div class="cert-info">
+        <div class="cert-name">Design &amp; Fabrication of Electronic Circuits</div>
+        <div class="cert-org">United Institute of Technology</div>
+        <div class="cert-year">2024</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-left">
+      <div class="cert-icon">🧠</div>
+      <div class="cert-info">
+        <div class="cert-name">Machine Learning</div>
+        <div class="cert-org">Effervescence, IIIT Allahabad</div>
+        <div class="cert-year">2024</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-right">
+      <div class="cert-icon">📡</div>
+      <div class="cert-info">
+        <div class="cert-name">IoT and Applications using AWS</div>
+        <div class="cert-org">United Institute of Technology</div>
+        <div class="cert-year">2023</div>
+      </div>
+    </div>
+    <div class="cert-item reveal from-left">
+      <div class="cert-icon">🏆</div>
+      <div class="cert-info">
+        <div class="cert-name">UHACK 2.0 Hackathon</div>
+        <div class="cert-org">National Hackathon</div>
+        <div class="cert-year">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-ripple-wrap">
+    <div class="c-ring"></div>
+    <div class="c-ring"></div>
+    <div class="c-ring"></div>
+    <div class="c-ring"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="sec-label reveal from-bottom">Say Hello</div>
+    <h2 class="sec-title reveal from-bottom">Let's <span>Connect</span></h2>
+    <p class="contact-email reveal from-bottom">architatripathi891@gmail.com</p>
+    <div class="contact-links reveal from-bottom">
+      <a href="mailto:architatripathi891@gmail.com" class="c-link">✉ Email</a>
+      <a href="#" class="c-link">💼 LinkedIn</a>
+      <a href="#" class="c-link">⌥ GitHub</a>
+      <a href="#" class="c-link">🧩 LeetCode</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Archita Tripathi · ECE · AKTU Lucknow · Built with vanilla HTML/CSS/JS
+</footer>
+
+</div><!-- .wrapper -->
+
+<script>
+/* ════════════════════════════════════════════════
+   LOADER FADE OUT
+════════════════════════════════════════════════ */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hide');
+  },1200);
+});
+
+/* ════════════════════════════════════════════════
+   CUSTOM CURSOR
+════════════════════════════════════════════════ */
+const dot=document.getElementById('cursor-dot');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.btn,.project-card,.cert-item,.stat-box').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+});
+
+/* ════════════════════════════════════════════════
+   PARTICLE NETWORK CANVAS
+════════════════════════════════════════════════ */
+(function(){
+  const cv=document.getElementById('particle-canvas');
+  const ctx=cv.getContext('2d');
+  let W,H,particles=[];
+  const COUNT=90, MAX_DIST=130;
+
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  function Particle(){
+    this.x=Math.random()*W;
+    this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.5;
+    this.vy=(Math.random()-.5)*.5;
+    this.r=Math.random()*1.5+.5;
+  }
+  for(let i=0;i<COUNT;i++) particles.push(new Particle());
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,212,255,.55)';
+      ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MAX_DIST){
+          const alpha=(1-d/MAX_DIST)*.35;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,212,255,${alpha})`;
+          ctx.lineWidth=.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════════════════════
+   MARQUEE CONTENT
+════════════════════════════════════════════════ */
+(function(){
+  const items=[
+    'Salesforce CRM','IBM AI Fundamentals','Arduino','North Central Railway',
+    'IIIT Allahabad','AWS IoT','AKTU Lucknow','United Institute of Technology',
+    'UHACK 2.0','GSM · GPS · IoT','PCB Design','Machine Learning',
+  ];
+  const track=document.getElementById('marquee-track');
+  const doubled=[...items,...items];
+  doubled.forEach(t=>{
+    const d=document.createElement('div');
+    d.className='marquee-item';
+    d.innerHTML=`<span class="dot"></span>${t}`;
+    track.appendChild(d);
+  });
+})();
+
+/* ════════════════════════════════════════════════
+   SCROLL REVEAL — IntersectionObserver
+════════════════════════════════════════════════ */
+const reveals=document.querySelectorAll('.reveal');
+const ro=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Skill bars
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar=>{
+        bar.style.width=bar.dataset.pct+'%';
+      });
+    }
+  });
+},{threshold:.15});
+reveals.forEach(el=>ro.observe(el));
+
+/* Also observe skill groups directly */
+document.querySelectorAll('.skill-group').forEach(g=>{
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.skill-bar-fill').forEach(bar=>{
+          bar.style.width=bar.dataset.pct+'%';
+        });
+      }
+    });
+  },{threshold:.3});
+  io.observe(g);
+});
+</script>
+</body>
+</html>
